@@ -9,7 +9,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       retry(failureCount, error) {
         if (error.status === 404) return false;
-        else if (failureCount < 3) return true;
+        else if (failureCount < 2) return true;
         else return false;
       },
     },
