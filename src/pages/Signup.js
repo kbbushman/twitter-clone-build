@@ -16,7 +16,7 @@ export default function Signup() {
       const rawFullname = event.target.elements.fullname.value;
       const rawUsername = event.target.elements.username.value;
       const rawPassword = event.target.elements.password.value;
-      const fullname = validate(rawFullname, "name", {
+      const fullname = validate(rawFullname, "username", {
         min_length: 4,
       });
       const username = validate(rawUsername, "username", {
