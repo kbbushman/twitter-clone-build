@@ -6,7 +6,10 @@ export async function authenticate() {
   return await client.get("/auth/login").then((res) => res.data.user);
 }
 
-export async function login() {}
+export async function login(payload) {
+  await client.post("/auth/login", payload);
+  window.location.pathname = "/";
+}
 
 export async function signup(payload) {
   await client.post("/auth/signup", payload);
