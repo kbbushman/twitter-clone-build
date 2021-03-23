@@ -13,7 +13,10 @@ export async function signup(payload) {
   window.location.pathname = "/";
 }
 
-export async function logout() {}
+export async function logout() {
+  await client.get("/auth/logout");
+  window.location.pathname = "/";
+}
 
 export async function getNotifications() {}
 
