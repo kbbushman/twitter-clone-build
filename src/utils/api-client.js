@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const client = axios.create();
+
 export async function authenticate() {}
 
 export async function login() {}
