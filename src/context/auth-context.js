@@ -17,4 +17,14 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuthUser() {}
+export function useAuthUser() {
+  const context = React.useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error(
+      "useAuthUser must be used within the AuthProvider component"
+    );
+  }
+
+  return context;
+}
