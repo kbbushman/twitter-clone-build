@@ -8,7 +8,10 @@ export async function authenticate() {
 
 export async function login() {}
 
-export async function signup() {}
+export async function signup(payload) {
+  await client.post("/auth/signup", payload);
+  window.location.pathname = "/";
+}
 
 export async function logout() {}
 
