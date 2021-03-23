@@ -13,7 +13,7 @@ export async function login(payload) {
 
 export async function signup(payload) {
   await client.post("/auth/signup", payload);
-  window.location.pathname = "/";
+  window.location.asssign("/settings/profile?redirected=true");
 }
 
 export async function logout() {
