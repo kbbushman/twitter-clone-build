@@ -1,3 +1,5 @@
+import MediaQuery from "react-responsive";
+import { Link, NavLink } from "react-router-dom";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons/faTwitter";
 import { faBell } from "@fortawesome/free-regular-svg-icons/faBell";
 import { faComments } from "@fortawesome/free-regular-svg-icons/faComments";
@@ -8,13 +10,13 @@ import { faEllipsisH } from "@fortawesome/free-solid-svg-icons/faEllipsisH";
 import { faHashtag } from "@fortawesome/free-solid-svg-icons/faHashtag";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
 import { Badge, Col } from "react-bootstrap";
 import { useQuery } from "react-query";
-import MediaQuery from "react-responsive";
-import { Link, NavLink } from "react-router-dom";
+import { useAuthUser } from "../context/auth-context";
 
 export default function Header() {
+  const authUser = useAuthUser();
+
   const list = [
     {
       name: "Home",
@@ -28,7 +30,7 @@ export default function Header() {
     },
     {
       name: "Profile",
-      href: `/user/authuser-screen-name`,
+      href: `/user/${authUser?.screen_name}`,
       icon: faUser,
     },
     {
