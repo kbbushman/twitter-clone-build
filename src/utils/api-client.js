@@ -63,6 +63,8 @@ export async function updateUserDetails(user) {
   await client.post("/api/updateuser", user);
 }
 
-export async function createPost() {}
+export async function createPost(post) {
+  await client.post("/api/post", post);
+}
 
 export async function getPostById() {}
