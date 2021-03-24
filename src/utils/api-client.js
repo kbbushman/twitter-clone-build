@@ -59,7 +59,9 @@ export async function unrepostPost() {}
 
 export async function repostPost() {}
 
-export async function updateUserDetails() {}
+export async function updateUserDetails(user) {
+  await client.post("/api/updateuser", user);
+}
 
 export async function createPost() {}
 
