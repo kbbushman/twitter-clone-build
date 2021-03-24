@@ -2,6 +2,7 @@ import React from "react";
 import { Alert, Figure, Form, Modal, Row } from "react-bootstrap";
 import { useAuthUser } from "../context/auth-context";
 import { updateUserDetails } from "../utils/api-client";
+import { uploadMedia } from "../utils/upload";
 import { validate } from "../utils/validate";
 
 export default function ProfileModal() {
@@ -55,6 +56,30 @@ export default function ProfileModal() {
     }
   }
 
+  async function uploadCoverImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const banner = await uploadMedia({
+        type: "image",
+        preset: "banner",
+        file,
+      });
+      setBanner(banner);
+    }
+  }
+
+  async function uploadProfileImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const avatar = await uploadMedia({
+        type: "image",
+        preset: "avatar",
+        file,
+      });
+      setProfile(avatar);
+    }
+  }
+
   return (
     <Modal
       enforceFocus={false}
@@ -101,6 +126,7 @@ export default function ProfileModal() {
                 Edit cover image
               </label>
               <input
+                onChange={uploadCoverImage}
                 style={{ display: "none" }}
                 id="cover-image"
                 type="file"
@@ -117,6 +143,7 @@ export default function ProfileModal() {
                     <Figure.Image className="w-100 h-100" src={profile} />
                   </Figure>
                   <input
+                    onChange={uploadProfileImage}
                     style={{ display: "none" }}
                     id="profile-image"
                     type="file"
