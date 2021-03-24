@@ -1,6 +1,8 @@
 import React from "react";
 import { Alert, Figure, Form, Modal, Row } from "react-bootstrap";
 import { useAuthUser } from "../context/auth-context";
+import { updateUserDetails } from "../utils/api-client";
+import { validate } from "../utils/validate";
 
 export default function ProfileModal() {
   const authUser = useAuthUser();
@@ -15,6 +17,43 @@ export default function ProfileModal() {
   const [profile, setProfile] = React.useState(
     authUser?.profile_image_url_https
   );
+
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
+      setLoading(true);
+      setError(null);
+
+      const _name = validate(name, "name", { identifier: "Name" });
+      const _bio = validate(bio, "html", {
+        identifier: "Bio",
+        max_length: 280,
+      });
+      const _website = validate(website, "html", {
+        identifier: "Website URL",
+        min_length: 0,
+      });
+      const _location = validate(location, "name", {
+        identifier: "Location",
+        min_length: 0,
+      });
+
+      const user = {
+        name: _name,
+        description: _bio,
+        profile_banner: banner,
+        location: _location,
+        website: _website,
+        profile_image_url_https: profile,
+      };
+
+      await updateUserDetails(user);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Modal
@@ -40,7 +79,7 @@ export default function ProfileModal() {
       )}
       <Modal.Body className="pt-1 pb-0 px-0">
         <fieldset>
-          <Form noValidate>
+          <Form onSubmit={handleSubmit} noValidate>
             <Figure
               className="d-flex"
               style={{
@@ -91,6 +130,7 @@ export default function ProfileModal() {
                   style={{ fontSize: "1.25rem" }}
                   type="text"
                   value={name}
+                  onChange={(event) => setName(event.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="bio">
@@ -99,6 +139,7 @@ export default function ProfileModal() {
                   as="textarea"
                   style={{ fontSize: "1.25rem", minHeight: "100px" }}
                   value={bio}
+                  onChange={(event) => setBio(event.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="location">
@@ -107,6 +148,7 @@ export default function ProfileModal() {
                   style={{ fontSize: "1.25rem" }}
                   type="text"
                   value={location}
+                  onChange={(event) => setLocation(event.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="website">
@@ -115,6 +157,7 @@ export default function ProfileModal() {
                   style={{ fontSize: "1.25rem" }}
                   type="text"
                   value={website}
+                  onChange={(event) => setWebsite(event.target.value)}
                 />
               </Form.Group>
             </div>
@@ -123,6 +166,7 @@ export default function ProfileModal() {
                 <div />
                 <div className="right">
                   <button
+                    disabled={isLoading}
                     type="submit"
                     className="btn btn-primary rounded-pill px-3 py-1 font-weight-bold"
                   >
