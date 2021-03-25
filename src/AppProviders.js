@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { AuthProvider } from "./context/auth-context";
 import "./styles/main.scss";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
