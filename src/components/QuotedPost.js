@@ -1,9 +1,8 @@
+import { Link } from "react-router-dom";
+import { Card, Figure, Row } from "react-bootstrap";
 import MultiMedia from "components/MultiMedia";
 import PostText from "components/PostText";
 import UserLink from "components/UserLink";
-import React from "react";
-import { Card, Figure, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { formatCreatedAt } from "../utils/date";
 
 export default function QuotedPost({ post, className, expanded = false }) {

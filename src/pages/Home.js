@@ -1,4 +1,3 @@
-import React from "react";
 import CreatePost from "components/CreatePost";
 import Feed from "components/Feed";
 import Heading from "components/Heading";
