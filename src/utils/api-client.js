@@ -53,9 +53,13 @@ export async function getTrends() {}
 
 export async function getSearchResults() {}
 
-export async function likePost() {}
+export async function likePost(post) {
+  await client.get(`/api/like/${post.id_str}`);
+}
 
-export async function unlikePost() {}
+export async function unlikePost(post) {
+  await client.get(`/api/unlike/${post.id_str}`);
+}
 
 export async function unrepostPost() {}
 
