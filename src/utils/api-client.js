@@ -83,4 +83,6 @@ export async function createPost(post) {
   await queryClient.invalidateQueries("Posts");
 }
 
-export async function getPostById() {}
+export async function getPostById(postId) {
+  await client.get(`/api/post/${postId}`).then((res) => res.data.post);
+}
