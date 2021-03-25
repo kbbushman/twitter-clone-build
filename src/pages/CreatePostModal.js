@@ -1,13 +1,84 @@
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useQuery } from "react-query";
+import { Alert, Media, Modal, OverlayTrigger, Popover } from "react-bootstrap";
 import { faImage } from "@fortawesome/free-regular-svg-icons/faImage";
 import { faSmile } from "@fortawesome/free-regular-svg-icons/faSmile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import QuotedPost from "components/QuotedPost";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-import React from "react";
-import { Alert, Media, Modal, OverlayTrigger, Popover } from "react-bootstrap";
+import QuotedPost from "components/QuotedPost";
+import { createPost, getPostById } from "../utils/api-client";
+import { isTextValid, validate } from "../utils/validate";
+import { useAuthUser } from "../context/auth-context";
 
 export default function CreatePostModal() {
+  const history = useHistory();
+  const quoteId = new URLSearchParams(history.location.search).get("quote");
+  const replyId = new URLSearchParams(history.location.search).get("reply_to");
+  const { data: quotePost } = useQuery(
+    "QuotePost",
+    () => getPostById(quoteId),
+    {
+      enabled: Boolean(quoteId),
+    }
+  );
+  const { data: replyPost } = useQuery(
+    "ReplyPost",
+    () => getPostById(replyId),
+    {
+      enabled: Boolean(replyId),
+    }
+  );
+  const authUser = useAuthUser();
+  const [text, setText] = React.useState("");
+  const [disabled, setDisabled] = React.useState(false);
+  const [error, setError] = React.useState(null);
+
+  function handleChange(event) {
+    const text = event.target.value;
+    setText(text);
+    setDisabled(!isTextValid(text));
+  }
+
+  async function handleSubmit() {
+    try {
+      if (disabled) return;
+      const content = validate(text.trim(), "html", {
+        max_length: 280,
+        identifier: "Post",
+      });
+      setDisabled(true);
+      let post = { text: content };
+      let url;
+      if (replyId) {
+        url = `/api/post/${replyId}/reply`;
+      } else if (quotePost) {
+        post = {
+          ...post,
+          is_quote_status: true,
+          quoted_status_id: quotePost.id,
+          quoted_status_id_str: quotePost.id_str,
+          quoted_status: quotePost._id,
+        };
+      }
+      await createPost(post, url);
+      setDisabled(false);
+      setText("");
+      handleCloseModal();
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
+  function handleCloseModal() {
+    history.goBack();
+  }
+
+  function addEmoji(emoji) {
+    setText((text) => text + emoji.native);
+  }
+
   const picker = (
     <Popover id="popover-basic">
       <Picker
@@ -16,6 +87,7 @@ export default function CreatePostModal() {
         emoji="point_up"
         title="Pick your emoji"
         set="twitter"
+        onSelect={addEmoji}
       />
     </Popover>
   );
@@ -28,23 +100,26 @@ export default function CreatePostModal() {
       show
       backdrop="static"
       keyboard={false}
+      onHide={handleCloseModal}
     >
       <Modal.Header closeButton className="py-2">
         <Modal.Title>
           <small className="font-weight-bold">
-            {"reply" ? "Post your reply" : "Compose post"}
+            {replyId ? "Post your reply" : "Compose post"}
           </small>
         </Modal.Title>
       </Modal.Header>
-      <Alert variant="danger" className="font-weight-bold text-white">
-        error
-      </Alert>
+      {error && (
+        <Alert variant="danger" className="font-weight-bold text-white">
+          {error}
+        </Alert>
+      )}
       <Modal.Body className="pt-1 pb-0">
         <Media className="h-100 w-100">
           <img
             className="rounded-circle"
-            src=""
-            alt=""
+            src={authUser?.profile_image_url_https}
+            alt={authUser.screen_name}
             width={50}
             height={50}
           />
@@ -54,8 +129,10 @@ export default function CreatePostModal() {
               style={{ height: "auto" }}
               name="text"
               placeholder="What's happening?"
+              value={text}
+              onChange={handleChange}
             ></textarea>
-            <QuotedPost className="mb-2 mt-n5" />
+            <QuotedPost post={replyPost || quotePost} className="mb-2 mt-n5" />
           </Media.Body>
         </Media>
       </Modal.Body>
@@ -77,7 +154,11 @@ export default function CreatePostModal() {
             </button>
           </div>
           <div className="right">
-            <button className="btn btn-primary rounded-pill px-3 py-2 font-weight-bold">
+            <button
+              onClick={handleSubmit}
+              disabled={disabled}
+              className="btn btn-primary rounded-pill px-3 py-2 font-weight-bold"
+            >
               Post
             </button>
           </div>
