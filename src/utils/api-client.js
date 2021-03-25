@@ -31,7 +31,9 @@ export async function getReplies() {}
 
 export async function getUserTimeline() {}
 
-export function getPosts() {}
+export async function getPosts() {
+  return await client.get("/api/home_timeline").then((res) => res.data.posts);
+}
 
 export async function getPostLikes() {}
 
