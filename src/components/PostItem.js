@@ -1,12 +1,11 @@
+import { Link } from "react-router-dom";
+import { Figure, ListGroup, Media, Row } from "react-bootstrap";
 import MultiMedia from "components/MultiMedia";
 import PostTag from "components/PostTag";
 import PostText from "components/PostText";
 import QuotedPost from "components/QuotedPost";
 import ReactionsBar from "components/ReactionsBar";
 import UserLink from "components/UserLink";
-import React from "react";
-import { Figure, ListGroup, Media, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { formatCreatedAt } from "../utils/date";
 
 export default function PostItem({ post, no_reply_tag }) {
