@@ -84,7 +84,7 @@ export default function PostDetail() {
         <Row className="border-top border-bottom d-flex p-2">
           <div className="py-1 pr-3">
             <span className="font-weight-bold mr-1">{post.favorite_count}</span>
-            <Link to={`/post/${post.id_str}likes`} className="text-muted">
+            <Link to={`/post/${post.id_str}/likes`} className="text-muted">
               Likes
             </Link>
           </div>
