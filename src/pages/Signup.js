@@ -13,10 +13,16 @@ export default function Signup() {
       event.preventDefault();
       setLoading(true);
       setError(null);
+      console.log(event.target.elements);
       const rawFullname = event.target.elements.fullname.value;
       const rawUsername = event.target.elements.username.value;
       const rawPassword = event.target.elements.password.value;
-      const fullname = validate(rawFullname, "username", {
+      console.log("RAW VALS =======", {
+        rawFullname,
+        rawUsername,
+        rawPassword,
+      });
+      const fullname = validate(rawFullname, "name", {
         min_length: 4,
       });
       const username = validate(rawUsername, "username", {
@@ -58,7 +64,7 @@ export default function Signup() {
               autoComplete="off"
             ></Form.Control>
           </Form.Group>
-          <Form.Group controlId="fillname">
+          <Form.Group controlId="fullname">
             <Form.Label>
               Full name - <small className="text-muted">optional</small>
             </Form.Label>
