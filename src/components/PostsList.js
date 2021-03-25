@@ -11,9 +11,16 @@ export default function PostsList(props) {
   return (
     <ListGroup variant="flush" className="border-bottom">
       {isSuccess ? (
-        posts.map((post) => (
-          <PostItem key={post._id} post={post} no_reply_tag={no_reply_tag} />
-        ))
+        posts.map(
+          (post) =>
+            post && (
+              <PostItem
+                key={post._id}
+                post={post}
+                no_reply_tag={no_reply_tag}
+              />
+            )
+        )
       ) : (
         <div className="message">No posts for you right now</div>
       )}
