@@ -50,7 +50,11 @@ export async function followUser() {}
 
 export async function unfollowUser() {}
 
-export async function getPostReposts() {}
+export async function getPostReposts(postId) {
+  return await client
+    .get(`/api/post/${postId}/reposts`)
+    .then((res) => res.data.users);
+}
 
 export async function getUserFollowers() {}
 
