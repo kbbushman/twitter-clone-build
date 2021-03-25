@@ -17,6 +17,7 @@ export default function QuotedPost({ post, className, expanded = false }) {
           <UserLink
             className="rounded-circle d-block"
             to={`/user/${post.user.screen_name}`}
+            user={post.user}
           >
             <Figure
               className="bg-border-color rounded-circle overflow-hidden mr-1 mb-0"
@@ -29,8 +30,9 @@ export default function QuotedPost({ post, className, expanded = false }) {
             </Figure>
           </UserLink>
           <UserLink
-            to={`/user/${post.user.screen_name}`}
             className="text-dark font-weight-bold mr-1"
+            to={`/user/${post.user.screen_name}`}
+            user={post.user}
           >
             {post.user.name}
           </UserLink>
