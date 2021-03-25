@@ -1,6 +1,6 @@
-import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { Col, Figure, Row } from "react-bootstrap";
+import { useQuery } from "react-query";
 import Heading from "components/Heading";
 import MultiMedia from "components/MultiMedia";
 import PostsList from "components/PostsList";
@@ -9,9 +9,8 @@ import PostText from "components/PostText";
 import QuotedPost from "components/QuotedPost";
 import ReactionsBar from "components/ReactionsBar";
 import UserLink from "components/UserLink";
-import { useQuery } from "react-query";
-import { getPostById, getReplies } from "../utils/api-client";
 import Spinner from "../components/Spinner";
+import { getPostById, getReplies } from "../utils/api-client";
 import { formatDate, formatTime } from "../utils/date";
 
 export default function PostDetail() {
