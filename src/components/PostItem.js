@@ -53,11 +53,11 @@ export default function PostItem({ post, no_reply_tag }) {
             </blockquote>
           </Row>
           <Row>
-            {/* <MultiMedia post={post} className="mt-2" />
+            <MultiMedia post={post} className="mt-2" />
             <QuotedPost
               post={!no_reply_tag && post.quoted_status}
               className="mt-2"
-            /> */}
+            />
           </Row>
           <Row className="d-flex justify-content-end align-items-center position-static">
             <ReactionsBar post={post} />
