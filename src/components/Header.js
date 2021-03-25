@@ -11,7 +11,6 @@ import { faHashtag } from "@fortawesome/free-solid-svg-icons/faHashtag";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge, Col } from "react-bootstrap";
-import { useQuery } from "react-query";
 import { useAuthUser } from "../context/auth-context";
 
 export default function Header() {
