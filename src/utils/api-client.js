@@ -40,7 +40,11 @@ export async function getPosts() {
   return await client.get("/api/home_timeline").then((res) => res.data.posts);
 }
 
-export async function getPostLikes() {}
+export async function getPostLikes(postId) {
+  return await client
+    .get(`/api/post/${postId}/likes`)
+    .then((res) => res.data.users);
+}
 
 export async function followUser() {}
 
