@@ -28,7 +28,11 @@ export function readNotification() {}
 
 export async function getPost() {}
 
-export async function getReplies() {}
+export async function getReplies(postId) {
+  return await client
+    .get(`/api/post/${postId}/replies`)
+    .then((res) => res.data.posts);
+}
 
 export async function getUserTimeline() {}
 
