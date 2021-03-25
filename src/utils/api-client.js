@@ -65,12 +65,12 @@ export async function unlikePost(post) {
 }
 
 export async function unrepostPost(post) {
-  await client.post(`/api/unrepost/`, post);
+  await client.post(`/api/unrepost`, post);
   await queryClient.invalidateQueries("Posts");
 }
 
 export async function repostPost(post) {
-  await client.post(`/api/repost/`, post);
+  await client.post(`/api/repost`, post);
   await queryClient.invalidateQueries("Posts");
 }
 
@@ -78,11 +78,11 @@ export async function updateUserDetails(user) {
   await client.post("/api/updateuser", user);
 }
 
-export async function createPost(post) {
-  await client.post("/api/post", post);
+export async function createPost(post, url = "/api/post") {
+  await client.post(url, post);
   await queryClient.invalidateQueries("Posts");
 }
 
 export async function getPostById(postId) {
-  await client.get(`/api/post/${postId}`).then((res) => res.data.post);
+  return await client.get(`/api/post/${postId}`).then((res) => res.data.post);
 }
