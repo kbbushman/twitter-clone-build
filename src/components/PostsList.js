@@ -1,4 +1,3 @@
-import React from "react";
 import { ListGroup } from "react-bootstrap";
 import PostItem from "./PostItem";
 import Spinner from "./Spinner";
