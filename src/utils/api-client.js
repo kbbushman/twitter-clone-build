@@ -14,7 +14,7 @@ export async function login(payload) {
 
 export async function signup(payload) {
   await client.post("/auth/signup", payload);
-  window.location.asssign("/settings/profile?redirected=true");
+  window.location.pathname.asssign("/settings/profile?redirected=true");
 }
 
 export async function logout() {
@@ -62,7 +62,9 @@ export async function getUserFollowers() {}
 
 export async function getFriends() {}
 
-export async function getUserSuggestions() {}
+export async function getUserSuggestions() {
+  return await client.get("/api/users").then((res) => res.data.users);
+}
 
 export async function getTrends() {}
 
