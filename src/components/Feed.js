@@ -1,11 +1,14 @@
+import { useQuery } from "react-query";
 import PostsList from "components/PostsList";
-import React from "react";
 import FollowCard from "./FollowCard";
+import { getPosts } from "../utils/api-client";
 
 export default function Feed() {
+  const { data: posts, isLoading, isSuccess } = useQuery("Posts", getPosts);
+
   return (
     <>
-      <PostsList />
+      <PostsList posts={posts} isLoading={isLoading} isSuccess={isSuccess} />
       <div className="message text-info">You have reached the end!</div>
       <FollowCard
         noPop
