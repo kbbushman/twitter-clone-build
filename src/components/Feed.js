@@ -1,20 +1,51 @@
-import { useQuery } from "react-query";
+import React from "react";
+import { useInfiniteQuery } from "react-query";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import PostsList from "components/PostsList";
 import FollowCard from "./FollowCard";
+import Spinner from "./Spinner";
 import { getPosts } from "../utils/api-client";
 
 export default function Feed() {
-  const { data: posts, isLoading, isSuccess } = useQuery("Posts", getPosts);
+  const [page, setPage] = React.useState(1);
+  const [hasFinished, setHasFinished] = React.useState(false);
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery("Posts", getPosts);
+
+  React.useEffect(() => {
+    const hasFinished = posts?.pages.some((page) => page.length < 20);
+    setHasFinished(hasFinished);
+  }, [posts]);
+
+  useBottomScrollListener(() => {
+    if (hasFinished) return;
+    fetchNextPage({ pageParam: page });
+    setPage((page) => page + 1);
+  });
 
   return (
     <>
-      <PostsList posts={posts} isLoading={isLoading} isSuccess={isSuccess} />
-      <div className="message text-info">You have reached the end!</div>
-      <FollowCard
-        noPop
-        length={7}
-        title="Follow more users to see their posts"
+      <PostsList
+        posts={posts?.pages.flatMap((page) => page)}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
       />
+      {isFetchingNextPage && <Spinner />}
+      {hasFinished && (
+        <>
+          <div className="message text-info">You have reached the end!</div>
+          <FollowCard
+            noPop
+            length={7}
+            title="Follow more users to see their posts"
+          />
+        </>
+      )}
     </>
   );
 }
