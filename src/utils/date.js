@@ -13,4 +13,6 @@ export function formatDate(timestamp) {
   return format(new Date(timestamp), "MMM do yyyy");
 }
 
-export function formatTime() {}
+export function formatTime(timestamp) {
+  return format(new Date(timestamp), "pp");
+}
