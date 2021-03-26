@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory } from "react-router-dom";
 import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
