@@ -32,8 +32,6 @@ export async function readNotification(notification) {
   await client.get(`/api/notification_read/${notification._id}`);
 }
 
-export async function getPost() {}
-
 export async function getReplies(postId) {
   return await client
     .get(`/api/post/${postId}/replies`)
@@ -60,14 +58,20 @@ export async function getPostLikes(postId) {
 
 export async function followUser(username) {
   await client.get(`/api/follow/${username}`);
+  await queryClient.invalidateQueries("Search");
+  await queryClient.invalidateQueries("UserFriends");
   await queryClient.invalidateQueries("Posts");
   await queryClient.invalidateQueries("UserSuggestions");
+  await queryClient.invalidateQueries("UserDetail");
 }
 
 export async function unfollowUser(username) {
   await client.get(`/api/unfollow/${username}`);
+  await queryClient.invalidateQueries("Search");
+  await queryClient.invalidateQueries("UserFriends");
   await queryClient.invalidateQueries("Posts");
   await queryClient.invalidateQueries("UserSuggestions");
+  await queryClient.invalidateQueries("UserDetail");
 }
 
 export async function getPostReposts(postId) {
@@ -106,24 +110,34 @@ export async function likePost(post) {
   await client.get(`/api/like/${post.id_str}`);
   await queryClient.invalidateQueries("Posts");
   await queryClient.invalidateQueries("PostDetail");
+  await queryClient.invalidateQueries("PostReplies");
+  await queryClient.invalidateQueries("UserDetail");
+  await queryClient.invalidateQueries("Search");
 }
 
 export async function unlikePost(post) {
   await client.get(`/api/unlike/${post.id_str}`);
   await queryClient.invalidateQueries("Posts");
   await queryClient.invalidateQueries("PostDetail");
+  await queryClient.invalidateQueries("PostReplies");
+  await queryClient.invalidateQueries("UserDetail");
+  await queryClient.invalidateQueries("Search");
 }
 
 export async function unrepostPost(post) {
   await client.post(`/api/unrepost`, post);
   await queryClient.invalidateQueries("Posts");
   await queryClient.invalidateQueries("PostDetail");
+  await queryClient.invalidateQueries("PostReplies");
+  await queryClient.invalidateQueries("UserDetail");
 }
 
 export async function repostPost(post) {
   await client.post(`/api/repost`, post);
   await queryClient.invalidateQueries("Posts");
   await queryClient.invalidateQueries("PostDetail");
+  await queryClient.invalidateQueries("PostReplies");
+  await queryClient.invalidateQueries("UserDetail");
 }
 
 export async function updateUserDetails(user) {
