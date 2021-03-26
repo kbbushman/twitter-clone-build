@@ -3,11 +3,18 @@ import { Figure, ListGroup } from "react-bootstrap";
 import PostText from "components/PostText";
 import QuotePost from "components/QuotedPost";
 import { useAuthUser } from "../context/auth-context";
+import { readNotification } from "../utils/api-client";
 
 export default function NotificationItem({ notification }) {
   const authUser = useAuthUser();
 
-  const active = "notification.read"
+  function handleReadNotification() {
+    if (!notification.read) {
+      readNotification(notification);
+    }
+  }
+
+  const active = notification.read
     ? ""
     : "bg-bg-color border-left-right-primary-custom";
   const { post, user } = notification.body;
@@ -107,9 +114,10 @@ export default function NotificationItem({ notification }) {
 
   return (
     <ListGroup.Item
-      className={`${active} px-lg-5 px-xs-2 px-sm-4`}
-      action
       as="div"
+      className={`${active} px-lg-5 px-xs-2 px-sm-4`}
+      onClick={handleReadNotification}
+      action
     >
       <Link className="stretched-link" to={anchor} />
       <div className="mt-n2 mb-2">
