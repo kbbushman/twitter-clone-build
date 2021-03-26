@@ -9,7 +9,7 @@ import Spinner from "../components/Spinner";
 export default function SearchResults() {
   const history = useHistory();
   const query = new URLSearchParams(history.location.search).get("q");
-  const { data, isLoading, isSuccess } = useQuery("Search", () =>
+  const { data, isLoading, isSuccess } = useQuery(["Search", query], () =>
     getSearchResults(query)
   );
 
