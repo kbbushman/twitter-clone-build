@@ -1,13 +1,32 @@
-import Heading from "components/Heading";
-import React from "react";
+import { useQuery } from "react-query";
 import { ListGroup } from "react-bootstrap";
+import Heading from "components/Heading";
+import Spinner from "../components/Spinner";
+import NotificationItem from "../components/NotificationItem";
+import { getNotifications } from "../utils/api-client";
 
 export default function Notifications() {
+  const { data: notifications, isLoading, isSuccess } = useQuery(
+    "Notifications",
+    getNotifications
+  );
+
+  if (isLoading) return <Spinner />;
+
   return (
     <>
       <Heading title="Notifications" btnProfile backButton />
       <ListGroup variant="flush">
-        <div className="message font-weight-bold">No notifications yet</div>
+        {isSuccess ? (
+          notifications.map((notification) => (
+            <NotificationItem
+              key={notification._id}
+              notification={notification}
+            />
+          ))
+        ) : (
+          <div className="message font-weight-bold">No notifications yet</div>
+        )}
       </ListGroup>
     </>
   );
