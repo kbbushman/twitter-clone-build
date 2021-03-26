@@ -34,7 +34,11 @@ export async function getReplies(postId) {
     .then((res) => res.data.posts);
 }
 
-export async function getUserTimeline() {}
+export async function getUserTimeline(username) {
+  return await client
+    .get(`/api/user_timeline/${username}`)
+    .then((res) => res.data);
+}
 
 export async function getPosts({ pageParam = 1 }) {
   return await client
