@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Splash() {
   return (
     <div className="vw-100 d-flex" style={{ height: "100vh" }}>

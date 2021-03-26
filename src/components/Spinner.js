@@ -1,4 +1,3 @@
-import React from "react";
 import { Spinner as LoadingSpinner, Col } from "react-bootstrap";
 
 export default function Spinner() {

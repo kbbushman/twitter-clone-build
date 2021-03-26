@@ -1,7 +1,6 @@
-import React from "react";
-import { unescape } from "html-escaper";
 import anchorme from "anchorme";
 import DOMPurify from "dompurify";
+import { unescape } from "html-escaper";
 
 export default function WithUrls({ children }) {
   if (!children || !children.toString) {

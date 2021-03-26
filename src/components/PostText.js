@@ -1,4 +1,3 @@
-import React from "react";
 import WithUrls from "components/WithUrls";
 import { truncateText } from "utils/truncate";
 import { useHistory } from "react-router-dom";

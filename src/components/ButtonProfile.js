@@ -1,4 +1,3 @@
-import React from "react";
 import { Figure } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuthUser } from "../context/auth-context";

@@ -1,7 +1,6 @@
-import React from "react";
+import getUrls from "get-urls";
 import { Card, Image } from "react-bootstrap";
 import { ReactTinyLink } from "react-tiny-link";
-import getUrls from "get-urls";
 
 export default function MultiMedia(props) {
   const { post, expanded = false, className } = props;

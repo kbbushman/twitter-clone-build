@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom";
+import { Navbar as Nav, Row, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons/faTwitter";
 import SearchBar from "components/SearchBar";
-import { Link } from "react-router-dom";
-import { Navbar as Nav, Row, Container } from "react-bootstrap";
 
 export default function Navbar() {
   return (

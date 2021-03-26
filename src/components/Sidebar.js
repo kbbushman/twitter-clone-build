@@ -1,7 +1,6 @@
-import SearchBar from "components/SearchBar";
-import React from "react";
 import { Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import SearchBar from "components/SearchBar";
 import FollowCard from "./FollowCard";
 import TrendingCard from "./TrendingCard";
 
