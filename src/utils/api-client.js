@@ -70,7 +70,11 @@ export async function getPostReposts(postId) {
     .then((res) => res.data.users);
 }
 
-export async function getUserFollowers() {}
+export async function getUserFollowers(username) {
+  return await client
+    .get(`/api/followers/${username}`)
+    .then((res) => res.data.users);
+}
 
 export async function getFriends(username) {
   return await client
