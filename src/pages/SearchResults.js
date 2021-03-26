@@ -1,10 +1,10 @@
 import { useHistory, Redirect } from "react-router-dom";
+import { useQuery } from "react-query";
 import Heading from "components/Heading";
 import PostsList from "components/PostsList";
 import UsersList from "components/UsersList";
-import { useQuery } from "react-query";
-import { getSearchResults } from "../utils/api-client";
 import Spinner from "../components/Spinner";
+import { getSearchResults } from "../utils/api-client";
 
 export default function SearchResults() {
   const history = useHistory();
