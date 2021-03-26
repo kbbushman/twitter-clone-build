@@ -22,7 +22,11 @@ export async function logout() {
   window.location.pathname = "/";
 }
 
-export async function getNotifications() {}
+export async function getNotifications() {
+  return await client
+    .get("/api/notifications")
+    .then((res) => res.data.notifications);
+}
 
 export function readNotification() {}
 
