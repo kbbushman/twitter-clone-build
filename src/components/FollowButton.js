@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useAuthUser } from "../context/auth-context";
+import { followUser, unfollowUser } from "../utils/api-client";
 
 export default function FollowButton({ user }) {
   const authUser = useAuthUser();
@@ -17,6 +18,17 @@ export default function FollowButton({ user }) {
     setHoverVariant("");
   }
 
+  async function handleUnfollowUser(event) {
+    event.preventDefault();
+    await unfollowUser(user.screen_name);
+    setHoverText("Unfollowed");
+  }
+
+  function handleFollowUser(event) {
+    event.preventDefault();
+    followUser(user.screen_name);
+  }
+
   const text = user.following ? "Following" : "Follow";
   const variant = user.following ? "primary" : "outline-primary";
 
@@ -26,6 +38,7 @@ export default function FollowButton({ user }) {
 
   return (
     <Button
+      onClick={user.following ? handleUnfollowUser : handleFollowUser}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       variant={hoverVariant || variant}
