@@ -1,3 +1,6 @@
+import MediaQuery from "react-responsive";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
 import Navbar from "components/Navbar";
 import Explore from "pages/Explore";
 import Login from "pages/Login";
@@ -5,10 +8,6 @@ import PostDetail from "pages/PostDetail";
 import SearchResults from "pages/SearchResults";
 import Signup from "pages/Signup";
 import UserDetail from "pages/UserDetail";
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import MediaQuery from "react-responsive";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 export default function UnAuthApp() {
   return (
