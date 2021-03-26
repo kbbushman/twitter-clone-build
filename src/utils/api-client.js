@@ -28,7 +28,9 @@ export async function getNotifications() {
     .then((res) => res.data.notifications);
 }
 
-export function readNotification() {}
+export async function readNotification(notification) {
+  await client.get(`/api/notification_read/${notification._id}`);
+}
 
 export async function getPost() {}
 
