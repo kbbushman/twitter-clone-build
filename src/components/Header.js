@@ -1,5 +1,6 @@
 import MediaQuery from "react-responsive";
 import { Link, NavLink } from "react-router-dom";
+import { useQuery } from "react-query";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons/faTwitter";
 import { faBell } from "@fortawesome/free-regular-svg-icons/faBell";
 import { faComments } from "@fortawesome/free-regular-svg-icons/faComments";
@@ -12,9 +13,15 @@ import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge, Col } from "react-bootstrap";
 import { useAuthUser } from "../context/auth-context";
+import { getNotifications } from "../utils/api-client";
 
 export default function Header() {
   const authUser = useAuthUser();
+  const { data: notifications } = useQuery("Notificatons", getNotifications);
+
+  const notificationsCount = notifications?.filter(
+    (notification) => !notification.read
+  ).length;
 
   const list = [
     {
@@ -36,7 +43,7 @@ export default function Header() {
       name: "Notifications",
       href: "/notifications",
       icon: faBell,
-      count: 0,
+      count: notificationsCount,
     },
     {
       name: "Chat Room",
