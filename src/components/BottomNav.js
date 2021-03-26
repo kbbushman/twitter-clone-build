@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import { useQuery } from "react-query";
 import { faBell } from "@fortawesome/free-regular-svg-icons/faBell";
 import { faUser } from "@fortawesome/free-regular-svg-icons/faUser";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
@@ -6,9 +7,15 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge } from "react-bootstrap";
 import { useAuthUser } from "../context/auth-context";
+import { getNotifications } from "../utils/api-client";
 
 export default function BottomNav() {
   const authUser = useAuthUser();
+  const { data: notifications } = useQuery("Notificatons", getNotifications);
+
+  const notificationsCount = notifications?.filter(
+    (notification) => !notification.read
+  ).length;
 
   const list = [
     {
@@ -25,7 +32,7 @@ export default function BottomNav() {
       name: "Notifications",
       href: "/notifications",
       icon: faBell,
-      count: 0,
+      count: notificationsCount,
     },
     {
       name: "Profile",
