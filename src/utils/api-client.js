@@ -48,9 +48,17 @@ export async function getPostLikes(postId) {
     .then((res) => res.data.users);
 }
 
-export async function followUser() {}
+export async function followUser(username) {
+  await client.get(`/api/follow/${username}`);
+  await queryClient.invalidateQueries("Posts");
+  await queryClient.invalidateQueries("UserSuggestions");
+}
 
-export async function unfollowUser() {}
+export async function unfollowUser(username) {
+  await client.get(`/api/unfollow/${username}`);
+  await queryClient.invalidateQueries("Posts");
+  await queryClient.invalidateQueries("UserSuggestions");
+}
 
 export async function getPostReposts(postId) {
   return await client
